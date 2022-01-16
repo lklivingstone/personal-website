@@ -6,137 +6,235 @@
     --primary-nav-bkd-clr: grey;
 }
 
-* {
-    font-family: 'Press Start 2P', cursive;
+*, *::before, *::after {
+    
     color: var(--primary-font-clr);
     margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    background-color: var(--primary-bkd-clr );      
+    margin: 0;
+    font-family: 'Press Start 2P', cursive;
+    background: var(--primary-bkd-clr );      
 }
 
 /* NAVBAR */
 
-header {
+  header {
+    background: var(--primary-nav-bkd-clr);
     height: 80px;
-    width: 100%;
-    background-color: var(--primary-nav-bkd-clr);
-    display: grid;
     text-align: center;
-    grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
-}
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+  }
 
-header .logo {
-    font-size: 40px;
-    display: flex;
-    grid-column: 2 / 3;
-    align-items: center;
-}
-header .logo a {
-    text-decoration: none;
-}
+  .logo {
+      height: 100%;
+      text-decoration: none;
+      font-size: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
 
-nav {
-    grid-column: 3/4;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-header ul {
-    display: flex;
-    list-style: none;
-    justify-content: flex-end;
-}
-
-header ul li {
-    margin: 0px 10px;
-}
-
-header ul li a {
-    text-decoration: none;
-    font-size: 15px;
-    padding: 8px 10px;
-    border-radius: 4px;
-    border: 3px var(--primary-nav-bkd-clr) solid;
-}
-
-header ul li a:hover {
-    border: 3px var(--primary-bkd-clr) solid;
-    color: var(--primary-bkd-clr);
-}
-
-
+  nav {
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    left: 0;
+    background: var(--background);
+    width: 100%;
+    transform: scale(1, 0);
+    transform-origin: top;
+    transition: transform 400ms ease-in-out;
+  }
 
 .nav-toggle {
-    display: none;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
 }
-
+  
+  
 .nav-toggle-label {
-    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 1em;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+  
+
+  .nav-toggle-label span::before {
+    display: block;
+    background: white;
+    height: 2px;
+    width: 1em;
+    border-radius: 2px;
+    position: relative;
+    right: 0px;
+  }
+
+  .nav-toggle-label span {
+    display: block;
+    background: white;
+    height: 2px;
+    width: 1.5em;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .nav-toggle-label span::after {
+    display: block;
+    right: 0;
+    background: white;
+    height: 2px;
+    width: 2em;
+    border-radius: 2px;
+    position: relative;
+  }
+  
+  .nav-toggle-label span::before,
+  .nav-toggle-label span::after {
+    content: '';
+    position: absolute;
+  }
+  
+  .nav-toggle-label span::before {
+    bottom: 7px;
+  }
+  
+  .nav-toggle-label span::after {
+    top: 7px;
+  }
+  
+  nav {
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    transform: scale(1, 0);
+    transform-origin: top;
+    transition: transform 400ms ease-in-out;
+  }
+  
+  nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 100vh;
+    background-color: #595959;
+    display: block;
+    text-align: center;
+  }
+  
+  nav li {
+      padding-top: 5em;
+  } 
+  
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+  }
+  
+  nav a:hover {
+    color: black;
+  }
+  
+  .nav-toggle:checked ~ nav {
+    transform: scale(1,1);
+  }
+  
+  .nav-toggle:checked ~ nav a {
+    opacity: 1;
+    transition: opacity 250ms ease-in-out 250ms;
+  }
+  
+  @media screen and (min-width: 800px) {
+    .nav-toggle-label {
+        display: none;
+    }
+  
+    header {
+        display: grid;
+        grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+    }
+    
+    .logo {
+        grid-column: 2 / 3;
+    }
+    
+    nav {
+        position: relative;
+        text-align: left;
+        transition: none;
+        transform: scale(1,1);
+        background: none;
+        top: initial;
+        left: initial;
+        /* end Edge support stuff */
+        grid-column: 3 / 4;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    
+    nav ul {
+        height: 0vh;
+        display: flex;
+    }
+    
+    nav li {
+        padding: 0;
+        margin-left: 3em;
+        margin-bottom: 0;
+    }
+    
+    nav a {
+        opacity: 1;
+        padding: 7px 7px;
+        position: relative;
+        background: grey;
+    }
+    
+    nav a::before {
+        content: '';
+        background: black;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        transition: top, left, right, bottom, 100ms ease-in-out;
+    }
+    
+    nav a:hover::before,
+    nav a:focus::before {
+        top: calc(1.5px * -2);
+        left: calc(1.5px * -2);
+        right: calc(1.5px * -2);
+        bottom: calc(1.5px * -2);
+    }
 }
 
+.content {
+    height: 100vh;
+    background-color: #333;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
 
-@media (max-width: 750px) {
-    header {
-        height: 80px;
-        background-color: var(--primary-nav-bkd-clr);
-        display: grid;
-        text-align: center;
-    }
-    header .logo {
-        font-size: 40px;
-        position: fixed;
-        left: 5%;
-        top: 20px;
-    }
-    nav {
-        background-color: grey;
-    }
-    .nav-toggle {
-        display: block;
-    }
-
-    .nav-toggle-label {
-        top: 0;
-        right: 0;
-        margin-right: 1em;
-        border: 1px solid red;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .nav-toggle-label span,
-    .nav-toggle-label::before,
-    .nav-toggle-label::after {
-        display: block;
-        background-color: grey;;
-        background: white;
-        height: 2px;
-        width: 2em;
-    }
-
-    nav ul {
-        position: fixed;
-        top: 80px;
-        left: 0;
-        background: grey;
-        height: 100vh;
-        width: 100%;
-        display: none;
-        text-align: center;
-    }
-
-    .nav-toggle:checked ~ nav ul {
-        display: block;
-    }
-
-    nav ul li {
-        margin: 40px 0;
-    }
+.content h2 {
+    font-size: 1em;    
 }
